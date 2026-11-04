@@ -1,0 +1,9 @@
+[project]
+name = "golf-gear"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = ["fastapi==0.162.0", "uvicorn==0.54.0", "websockets==17.3", "httpx==0.28.1"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
