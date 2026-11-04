@@ -6,9 +6,7 @@ A simple web app that sells golf gear. Shoppers browse a catalog, use a live-upd
 
 ## User stories
 
-Stories marked _not implemented yet_ are specified but not built: their tasks haven't run or didn't get done. The next run on this project plans them again.
-
-### US-1 (must) · not implemented yet
+### US-1 (must)
 
 As **shopper**, I want **to browse a catalog of golf gear (clubs, balls, bags, apparel, accessories)**, so that I can find items to buy.
 
@@ -19,7 +17,7 @@ Acceptance criteria:
 - Each product has an Add to cart button
 - Out-of-stock products show 'Out of stock' and the add button is disabled
 
-### US-2 (should) · not implemented yet
+### US-2 (should)
 
 As **shopper**, I want **to filter the catalog by category and search by name**, so that I can find gear quickly.
 
@@ -30,7 +28,7 @@ Acceptance criteria:
 - No matches shows a 'No products found' message
 - Clearing filters shows all products
 
-### US-3 (must) · not implemented yet
+### US-3 (must)
 
 As **shopper**, I want **a live shopping cart that updates immediately without page reload**, so that I always see what I'm buying and the total.
 
@@ -44,7 +42,7 @@ Acceptance criteria:
 - Cart persists across page reloads in the same browser (localStorage)
 - Totals are computed correctly to 2 decimals
 
-### US-4 (must) · not implemented yet
+### US-4 (must)
 
 As **shopper**, I want **to check out with a mocked payment form**, so that I can complete a simulated purchase.
 
@@ -57,7 +55,7 @@ Acceptance criteria:
 - No real payment provider is called and no card data is stored or sent anywhere
 - Double submission is prevented while processing
 
-### US-5 (must) · not implemented yet
+### US-5 (must)
 
 As **shopper**, I want **an order confirmation after successful payment**, so that I know the purchase went through.
 
