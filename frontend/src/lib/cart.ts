@@ -7,7 +7,13 @@ export function addItem(cart: CartLine[], product: Product): CartLine[] {
   if (existing) {
     return cart.map((l) =>
       l.productId === product.id
-        ? { ...l, quantity: Math.min(l.quantity + 1, l.maxQuantity) }
+        ? {
+            ...l,
+            name: product.name,
+            unitPriceCents: product.priceCents,
+            maxQuantity: max,
+            quantity: Math.min(l.quantity + 1, max),
+          }
         : l,
     );
   }
@@ -24,8 +30,9 @@ export function addItem(cart: CartLine[], product: Product): CartLine[] {
 }
 
 export function setQuantity(cart: CartLine[], productId: string, qty: number): CartLine[] {
-  if (!(qty > 0)) return removeItem(cart, productId);
+  if (!Number.isFinite(qty)) return cart;
   const q = Math.floor(qty);
+  if (q <= 0) return removeItem(cart, productId);
   return cart.map((l) =>
     l.productId === productId
       ? { ...l, quantity: Math.max(1, Math.min(q, l.maxQuantity)) }

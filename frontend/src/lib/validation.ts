@@ -1,5 +1,9 @@
 import type { CheckoutErrors, CheckoutForm } from "./types";
 
+export function normalizeCardNumber(value: string): string {
+  return value.replace(/\s/g, "");
+}
+
 export function luhnValid(digits: string): boolean {
   if (!/^\d+$/.test(digits)) return false;
   let sum = 0;
@@ -35,7 +39,7 @@ export function validateCheckout(form: CheckoutForm, now: Date = new Date()): Ch
   const errors: CheckoutErrors = {};
   if (form.name.trim() === "") errors.name = "Name is required";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errors.email = "Enter a valid email address";
-  const digits = form.cardNumber.replace(/ /g, "");
+  const digits = normalizeCardNumber(form.cardNumber);
   if (!/^\d{13,19}$/.test(digits) || !luhnValid(digits)) errors.cardNumber = "Enter a valid card number";
   if (!parseExpiry(form.expiry)) errors.expiry = "Enter a valid expiry date (MM/YY)";
   else if (!isExpiryInFuture(form.expiry, now)) errors.expiry = "Card has expired";
