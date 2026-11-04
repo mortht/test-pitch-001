@@ -1,17 +1,21 @@
+from typing import Literal
+
 from pydantic import BaseModel
+
+Category = Literal["clubs", "balls", "bags", "apparel", "accessories"]
 
 
 class Product(BaseModel):
     id: str
     name: str
-    category: str
+    category: Category
     priceCents: int
     stock: int
     imageUrl: str | None = None
     description: str
 
 
-def _p(id, name, cat, price, stock, desc):
+def _p(id: str, name: str, cat: Category, price: int, stock: int, desc: str) -> Product:
     return Product(id=id, name=name, category=cat, priceCents=price, stock=stock,
                    imageUrl=None, description=desc)
 

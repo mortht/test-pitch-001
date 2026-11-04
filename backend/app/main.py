@@ -7,7 +7,7 @@ from .catalog import PRODUCTS
 from .orders import OrderError, OrderIn, build_order
 
 app = FastAPI()
-DIST = Path("frontend/dist")
+DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
 
 
 @app.get("/api/products")

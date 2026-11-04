@@ -42,3 +42,28 @@ def test_422():
     assert c.post("/api/orders", json=body(ok, cardNumber="4242")).status_code == 422
     assert c.post("/api/orders", json={"email": "a@b.co", "items": ok}).status_code == 422
     assert c.post("/api/orders", json={"customerName": "A", "items": ok}).status_code == 422
+
+
+def test_multi_line_totals_and_fields():
+    r = c.post("/api/orders", json=body([{"productId": "tee-pack", "quantity": 2},
+                                         {"productId": "pro-driver", "quantity": 1}]))
+    assert r.status_code == 201
+    j = r.json()
+    for it in j["items"]:
+        assert set(it) == {"productId", "name", "unitPriceCents", "quantity", "lineTotalCents"}
+        assert it["lineTotalCents"] == it["unitPriceCents"] * it["quantity"]
+    assert j["totalCents"] == sum(i["lineTotalCents"] for i in j["items"])
+
+
+def test_duplicate_and_negative_quantities():
+    for items in ([{"productId": "tee-pack", "quantity": 5}, {"productId": "tee-pack", "quantity": -3}],
+                  [{"productId": "tee-pack", "quantity": 0}, {"productId": "tee-pack", "quantity": 2}]):
+        r = c.post("/api/orders", json=body(items))
+        assert r.status_code == 400 and r.json()["detail"]
+
+
+def test_blank_name_and_bad_email_422():
+    assert c.post("/api/orders", json={**body([{"productId": "tee-pack", "quantity": 1}]),
+                                       "customerName": "  "}).status_code == 422
+    assert c.post("/api/orders", json={**body([{"productId": "tee-pack", "quantity": 1}]),
+                                       "email": ""}).status_code == 422
